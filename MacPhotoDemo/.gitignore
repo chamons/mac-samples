@@ -1,0 +1,5 @@
+packages/
+.DS_Store
+*/bin/*
+*/obj/*
+MacPhotoDemo.userprefs
