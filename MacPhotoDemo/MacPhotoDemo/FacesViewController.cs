@@ -114,7 +114,10 @@ namespace MacPhotoDemo
 			double imagePixelWidth = (double)image.Representations()[0].PixelsWide;
 			double imagePixelHeight = (double)image.Representations()[0].PixelsHigh;
 
-			CGRect photoFrame = ThePhoto.Frame;
+			// The photo frame itself is always square, but not every image is square
+			CGRect photoFrame = ThePhoto.Subviews [0].Frame;
+			photoFrame.Offset (ThePhoto.Frame.Location);
+
 			// The % scaling needed in each axis
 			double percentageX = photoFrame.Width / imagePixelWidth;
 			double percentageY = photoFrame.Height / imagePixelHeight;
