@@ -61,7 +61,7 @@ namespace MacPhotoDemo
 			openDialog.CanChooseDirectories = false;
 			openDialog.AllowsMultipleSelection = false;
 
-			if (openDialog.RunModal (new string[] { "jpg" }) == 1)
+			if (openDialog.RunModal (new string[] { "jpg", "png" }) == 1)
 			{
 				string fileName = openDialog.Filename;
 				NSImage image = new NSImage (fileName);
@@ -104,7 +104,6 @@ namespace MacPhotoDemo
 				border.RemoveFromSuperview ();
 			Borders.Clear ();
 		}
-
 
 		void AddFrameAroundFace(FaceRectangle faceRect)
 		{
