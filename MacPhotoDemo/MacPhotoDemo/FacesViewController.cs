@@ -29,8 +29,9 @@ namespace MacPhotoDemo
 	public partial class FacesViewController : NSViewController
 	{
 		FaceServiceClient client;
+		List<BorderView> Borders = new List<BorderView> ();
 
-		public FacesViewController(IntPtr handle) : base(handle)
+		public FacesViewController (IntPtr handle) : base(handle)
 		{
 		}
 
@@ -38,7 +39,7 @@ namespace MacPhotoDemo
 		{
 			base.ViewDidLoad();
 
-			string api_key = "6c58039698fe4fc49a61102b736cbc38";
+			string api_key = "";
 			if (string.IsNullOrEmpty(api_key))
 			{
 				NSAlert a = new NSAlert();
@@ -60,26 +61,28 @@ namespace MacPhotoDemo
 			openDialog.CanChooseDirectories = false;
 			openDialog.AllowsMultipleSelection = false;
 
-			if (openDialog.RunModal(new string[] { "jpg" }) == 1)
+			if (openDialog.RunModal (new string[] { "jpg" }) == 1)
 			{
 				string fileName = openDialog.Filename;
-				NSImage image = new NSImage(fileName);
+				NSImage image = new NSImage (fileName);
 				ThePhoto.Image = image;
-				DetailView.TextStorage.SetString(new NSAttributedString("Processing..."));
 
-				using (FileStream file = new FileStream(fileName, FileMode.Open))
+				ClearExistingBorders ();
+				DetailView.TextStorage.SetString (new NSAttributedString("Processing..."));
+
+				using (FileStream file = new FileStream (fileName, FileMode.Open))
 				{
-					var faces = await client.DetectAsync(file, true, true, new List<FaceAttributeType>() { FaceAttributeType.Gender, FaceAttributeType.Age, FaceAttributeType.Smile, FaceAttributeType.Glasses });
+					var faces = await client.DetectAsync (file, true, true, new List<FaceAttributeType>() { FaceAttributeType.Gender, FaceAttributeType.Age, FaceAttributeType.Smile, FaceAttributeType.Glasses });
 
-					DetailView.TextStorage.SetString(new NSAttributedString(""));
+					DetailView.TextStorage.SetString (new NSAttributedString(""));
 
 					foreach (var face in faces)
 					{
 						FaceRectangle faceRect = face.FaceRectangle;
-						DetailView.TextStorage.Append(FormatRect(faceRect));
-						DetailView.TextStorage.Append(FormatDetails(face.FaceAttributes));
+						DetailView.TextStorage.Append (FormatRect (faceRect));
+						DetailView.TextStorage.Append (FormatDetails (face.FaceAttributes));
 
-						AddFrameAroundFace(faceRect);
+						AddFrameAroundFace (faceRect);
 					}
 				}
 			}
@@ -95,6 +98,14 @@ namespace MacPhotoDemo
 			return new NSAttributedString(string.Format("Gender - {0}\nAge - {1}\nSmile - {2}\nGlasses - {3}\n\n", attr.Gender, attr.Age, attr.Smile, attr.Glasses));
 		}
 
+		void ClearExistingBorders ()
+		{
+			foreach (var border in Borders)
+				border.RemoveFromSuperview ();
+			Borders.Clear ();
+		}
+
+
 		void AddFrameAroundFace(FaceRectangle faceRect)
 		{
 			NSImage image = ThePhoto.Image;
@@ -104,9 +115,10 @@ namespace MacPhotoDemo
 			double imagePixelWidth = (double)image.Representations()[0].PixelsWide;
 			double imagePixelHeight = (double)image.Representations()[0].PixelsHigh;
 
+			CGRect photoFrame = ThePhoto.Frame;
 			// The % scaling needed in each axis
-			double percentageX = ThePhoto.Frame.Width / imagePixelWidth;
-			double percentageY = ThePhoto.Frame.Height / imagePixelHeight;
+			double percentageX = photoFrame.Width / imagePixelWidth;
+			double percentageY = photoFrame.Height / imagePixelHeight;
 
 			// Scaled position - API gives top left, but Cocoa wants bottom left.
 			double faceRectTopConverted = imagePixelHeight - faceRect.Top;
@@ -114,11 +126,12 @@ namespace MacPhotoDemo
 			double picY = (int)Math.Round(faceRectTopConverted * percentageY);
 
 			// Scaled size
-			CGRect photoFrame = ThePhoto.Frame;
 			double picWidth = (photoFrame.Width / imagePixelWidth) * faceRect.Width;
 			double picHeight = (photoFrame.Height / imagePixelHeight) * faceRect.Height;
 
-			View.AddSubview(new BorderView(new CGRect(photoFrame.X + picX, photoFrame.Y + picY - picHeight, picWidth, picHeight)));
+			BorderView borderView = new BorderView (new CGRect (photoFrame.X + picX, photoFrame.Y + picY - picHeight, picWidth, picHeight));
+			Borders.Add (borderView);
+			View.AddSubview (borderView);
 		}
 	}
 }
