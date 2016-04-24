@@ -9,8 +9,8 @@ using System.CodeDom.Compiler;
 
 namespace MacPhotoDemo
 {
-	[Register ("ViewController")]
-	partial class ViewController
+	[Register ("EmotionViewController")]
+	partial class EmotionViewController
 	{
 		[Outlet]
 		AppKit.NSTextView DetailView { get; set; }
@@ -28,14 +28,14 @@ namespace MacPhotoDemo
 				PickPhotoButton = null;
 			}
 
-			if (ThePhoto != null) {
-				ThePhoto.Dispose ();
-				ThePhoto = null;
-			}
-
 			if (DetailView != null) {
 				DetailView.Dispose ();
 				DetailView = null;
+			}
+
+			if (ThePhoto != null) {
+				ThePhoto.Dispose ();
+				ThePhoto = null;
 			}
 		}
 	}

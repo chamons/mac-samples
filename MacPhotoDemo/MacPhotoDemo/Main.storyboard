@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="10116" systemVersion="15E65" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" initialViewController="B8D-0N-5wS">
     <dependencies>
+        <deployment identifier="macosx"/>
         <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="10116"/>
     </dependencies>
     <scenes>
@@ -657,23 +658,48 @@
                         <rect key="screenRect" x="0.0" y="0.0" width="1680" height="1027"/>
                     </window>
                     <connections>
-                        <segue destination="XfG-lQ-9wD" kind="relationship" relationship="window.shadowedContentViewController" id="cq2-FE-JQM"/>
+                        <segue destination="CHH-nq-zQi" kind="relationship" relationship="window.shadowedContentViewController" id="t0G-2u-ruK"/>
                     </connections>
                 </windowController>
                 <customObject id="Oky-zY-oP4" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="75" y="250"/>
         </scene>
-        <!--View Controller-->
+        <!--Tab View Controller-->
+        <scene sceneID="8f9-K6-3Nw">
+            <objects>
+                <tabViewController selectedTabViewItemIndex="0" id="CHH-nq-zQi" sceneMemberID="viewController">
+                    <tabViewItems>
+                        <tabViewItem id="ZFB-na-pRI"/>
+                        <tabViewItem id="IZt-Tc-wIh"/>
+                        <tabViewItem id="qMx-q3-2pO"/>
+                    </tabViewItems>
+                    <tabView key="tabView" type="noTabsNoBorder" id="EqX-2o-g2I">
+                        <rect key="frame" x="0.0" y="0.0" width="450" height="300"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <font key="font" metaFont="message"/>
+                        <tabViewItems/>
+                    </tabView>
+                    <connections>
+                        <segue destination="XfG-lQ-9wD" kind="relationship" relationship="tabItems" id="RVA-nj-452"/>
+                        <segue destination="RZK-vU-fOZ" kind="relationship" relationship="tabItems" id="H43-KH-gaJ"/>
+                        <segue destination="PwO-FB-MyE" kind="relationship" relationship="tabItems" id="SBd-fw-2Zf"/>
+                    </connections>
+                </tabViewController>
+                <customObject id="nD0-xr-m77" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="36" y="677"/>
+        </scene>
+        <!--Faces-->
         <scene sceneID="hIz-AP-VOD">
             <objects>
-                <viewController id="XfG-lQ-9wD" customClass="ViewController" sceneMemberID="viewController">
+                <viewController title="Faces" id="XfG-lQ-9wD" customClass="FacesViewController" sceneMemberID="viewController">
                     <view key="view" id="m2S-Jp-Qdl">
-                        <rect key="frame" x="0.0" y="0.0" width="682" height="270"/>
+                        <rect key="frame" x="0.0" y="0.0" width="682" height="269"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <subviews>
-                            <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Prr-bi-LJt">
-                                <rect key="frame" x="62" y="55" width="195" height="195"/>
+                            <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Prr-bi-LJt">
+                                <rect key="frame" x="62" y="54" width="195" height="195"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="195" id="Gez-cS-PGL"/>
                                     <constraint firstAttribute="width" constant="195" id="Opb-wC-ZA9"/>
@@ -681,26 +707,26 @@
                                 <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageAlignment="bottomLeft" imageScaling="proportionallyDown" id="4Db-uW-cUC"/>
                             </imageView>
                             <button verticalHuggingPriority="750" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="FK7-6t-gui">
-                                <rect key="frame" x="107" y="7" width="105" height="32"/>
+                                <rect key="frame" x="107" y="6" width="105" height="32"/>
                                 <buttonCell key="cell" type="push" title="Pick Photo" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="boE-8O-1sE">
                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                     <font key="font" metaFont="system"/>
                                 </buttonCell>
                             </button>
-                            <scrollView horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" hasHorizontalScroller="NO" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="10x-te-acl">
-                                <rect key="frame" x="315" y="55" width="347" height="195"/>
+                            <scrollView misplaced="YES" horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" hasHorizontalScroller="NO" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="10x-te-acl">
+                                <rect key="frame" x="315" y="54" width="347" height="195"/>
                                 <clipView key="contentView" id="Wp2-NL-Rtx">
-                                    <rect key="frame" x="1" y="1" width="330" height="193"/>
+                                    <rect key="frame" x="1" y="1" width="345" height="193"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
                                         <textView importsGraphics="NO" findStyle="panel" continuousSpellChecking="YES" allowsUndo="YES" usesRuler="YES" usesFontPanel="YES" verticallyResizable="YES" allowsNonContiguousLayout="YES" quoteSubstitution="YES" dashSubstitution="YES" spellingCorrection="YES" smartInsertDelete="YES" id="K6r-D3-0S9">
-                                            <rect key="frame" x="0.0" y="0.0" width="330" height="193"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="345" height="193"/>
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                            <size key="minSize" width="330" height="193"/>
+                                            <size key="minSize" width="345" height="193"/>
                                             <size key="maxSize" width="463" height="10000000"/>
                                             <color key="insertionPointColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
-                                            <size key="minSize" width="330" height="193"/>
+                                            <size key="minSize" width="345" height="193"/>
                                             <size key="maxSize" width="463" height="10000000"/>
                                         </textView>
                                     </subviews>
@@ -711,7 +737,7 @@
                                     <autoresizingMask key="autoresizingMask"/>
                                 </scroller>
                                 <scroller key="verticalScroller" verticalHuggingPriority="750" horizontal="NO" id="T57-60-a0w">
-                                    <rect key="frame" x="331" y="1" width="15" height="193"/>
+                                    <rect key="frame" x="330" y="1" width="16" height="193"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                 </scroller>
                             </scrollView>
@@ -727,14 +753,158 @@
                         </constraints>
                     </view>
                     <connections>
-                        <outlet property="DetailView" destination="K6r-D3-0S9" id="Edh-hr-GDC"/>
-                        <outlet property="PickPhotoButton" destination="FK7-6t-gui" id="MMi-3k-ZXs"/>
-                        <outlet property="ThePhoto" destination="Prr-bi-LJt" id="VJb-Gl-UY1"/>
+                        <outlet property="DetailView" destination="K6r-D3-0S9" id="jy1-nZ-jPr"/>
+                        <outlet property="PickPhotoButton" destination="FK7-6t-gui" id="S9I-Pm-P18"/>
+                        <outlet property="ThePhoto" destination="Prr-bi-LJt" id="6v1-gV-TrO"/>
                     </connections>
                 </viewController>
                 <customObject id="rPt-NT-nkU" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="176" y="655"/>
+            <point key="canvasLocation" x="822" y="306.5"/>
+        </scene>
+        <!--Computer Vision-->
+        <scene sceneID="TBo-2N-dE1">
+            <objects>
+                <viewController title="Computer Vision" id="RZK-vU-fOZ" customClass="ComputerVisionViewController" sceneMemberID="viewController">
+                    <view key="view" id="iiE-Ce-Rux">
+                        <rect key="frame" x="0.0" y="0.0" width="682" height="269"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <subviews>
+                            <button verticalHuggingPriority="750" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="XeV-kv-mYJ">
+                                <rect key="frame" x="107" y="6" width="105" height="32"/>
+                                <buttonCell key="cell" type="push" title="Pick Photo" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="cln-N5-5sd">
+                                    <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                    <font key="font" metaFont="system"/>
+                                </buttonCell>
+                            </button>
+                            <scrollView misplaced="YES" horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" hasHorizontalScroller="NO" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yv8-YM-jDV">
+                                <rect key="frame" x="315" y="54" width="347" height="195"/>
+                                <clipView key="contentView" id="DlX-j5-jgv">
+                                    <rect key="frame" x="1" y="1" width="345" height="193"/>
+                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                    <subviews>
+                                        <textView importsGraphics="NO" findStyle="panel" continuousSpellChecking="YES" allowsUndo="YES" usesRuler="YES" usesFontPanel="YES" verticallyResizable="YES" allowsNonContiguousLayout="YES" quoteSubstitution="YES" dashSubstitution="YES" smartInsertDelete="YES" id="uoS-Ih-Jvf">
+                                            <rect key="frame" x="0.0" y="0.0" width="345" height="193"/>
+                                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                            <size key="minSize" width="345" height="193"/>
+                                            <size key="maxSize" width="463" height="10000000"/>
+                                            <color key="insertionPointColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                            <size key="minSize" width="345" height="193"/>
+                                            <size key="maxSize" width="463" height="10000000"/>
+                                        </textView>
+                                    </subviews>
+                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                </clipView>
+                                <scroller key="horizontalScroller" hidden="YES" verticalHuggingPriority="750" doubleValue="1" horizontal="YES" id="jdC-HZ-kmb">
+                                    <rect key="frame" x="-100" y="-100" width="87" height="18"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                </scroller>
+                                <scroller key="verticalScroller" verticalHuggingPriority="750" horizontal="NO" id="oze-NS-syu">
+                                    <rect key="frame" x="330" y="1" width="16" height="193"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                </scroller>
+                            </scrollView>
+                            <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="YiC-Kj-BIV">
+                                <rect key="frame" x="62" y="54" width="195" height="195"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="195" id="2TY-yq-sZO"/>
+                                    <constraint firstAttribute="width" constant="195" id="Yv0-eX-L7b"/>
+                                </constraints>
+                                <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageAlignment="bottomLeft" imageScaling="proportionallyDown" id="gXc-Yz-Q3W"/>
+                            </imageView>
+                        </subviews>
+                        <constraints>
+                            <constraint firstItem="YiC-Kj-BIV" firstAttribute="bottom" secondItem="yv8-YM-jDV" secondAttribute="bottom" id="FhF-ZB-w4k"/>
+                            <constraint firstItem="XeV-kv-mYJ" firstAttribute="top" secondItem="YiC-Kj-BIV" secondAttribute="bottom" constant="20" symbolic="YES" id="GyD-bg-cNl"/>
+                            <constraint firstAttribute="trailing" secondItem="yv8-YM-jDV" secondAttribute="trailing" constant="20" symbolic="YES" id="IdB-kU-dYz"/>
+                            <constraint firstItem="yv8-YM-jDV" firstAttribute="top" secondItem="iiE-Ce-Rux" secondAttribute="top" constant="20" id="YTK-dE-cTz"/>
+                            <constraint firstItem="yv8-YM-jDV" firstAttribute="leading" secondItem="YiC-Kj-BIV" secondAttribute="trailing" constant="58" id="aWa-4a-RdO"/>
+                            <constraint firstAttribute="bottom" secondItem="XeV-kv-mYJ" secondAttribute="bottom" constant="14" id="qur-Yd-UIo"/>
+                            <constraint firstItem="YiC-Kj-BIV" firstAttribute="leading" secondItem="iiE-Ce-Rux" secondAttribute="leading" constant="62" id="so2-I0-bdc"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="DetailView" destination="uoS-Ih-Jvf" id="oOa-Pb-gjT"/>
+                        <outlet property="PickPhotoButton" destination="XeV-kv-mYJ" id="RXY-1f-gJn"/>
+                        <outlet property="ThePhoto" destination="YiC-Kj-BIV" id="7Wx-GB-Iig"/>
+                    </connections>
+                </viewController>
+                <customObject id="NgD-q3-EY7" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="790" y="702.5"/>
+        </scene>
+        <!--Emotion-->
+        <scene sceneID="K3f-DJ-kZx">
+            <objects>
+                <viewController title="Emotion" id="PwO-FB-MyE" customClass="EmotionViewController" sceneMemberID="viewController">
+                    <view key="view" id="E53-8t-NK9">
+                        <rect key="frame" x="0.0" y="0.0" width="682" height="269"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <subviews>
+                            <button verticalHuggingPriority="750" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="qOU-di-Dg2">
+                                <rect key="frame" x="107" y="6" width="105" height="32"/>
+                                <buttonCell key="cell" type="push" title="Pick Photo" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="QkC-hF-efI">
+                                    <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                    <font key="font" metaFont="system"/>
+                                </buttonCell>
+                            </button>
+                            <scrollView misplaced="YES" horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" hasHorizontalScroller="NO" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ylV-hu-uIh">
+                                <rect key="frame" x="315" y="54" width="347" height="195"/>
+                                <clipView key="contentView" id="Ycv-XX-PUH">
+                                    <rect key="frame" x="1" y="1" width="345" height="193"/>
+                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                    <subviews>
+                                        <textView importsGraphics="NO" findStyle="panel" continuousSpellChecking="YES" allowsUndo="YES" usesRuler="YES" usesFontPanel="YES" verticallyResizable="YES" allowsNonContiguousLayout="YES" quoteSubstitution="YES" dashSubstitution="YES" smartInsertDelete="YES" id="6zr-pS-cxW">
+                                            <rect key="frame" x="0.0" y="0.0" width="345" height="193"/>
+                                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                            <size key="minSize" width="345" height="193"/>
+                                            <size key="maxSize" width="463" height="10000000"/>
+                                            <color key="insertionPointColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                            <size key="minSize" width="345" height="193"/>
+                                            <size key="maxSize" width="463" height="10000000"/>
+                                        </textView>
+                                    </subviews>
+                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                </clipView>
+                                <scroller key="horizontalScroller" hidden="YES" verticalHuggingPriority="750" doubleValue="1" horizontal="YES" id="xkE-c3-mMm">
+                                    <rect key="frame" x="-100" y="-100" width="87" height="18"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                </scroller>
+                                <scroller key="verticalScroller" verticalHuggingPriority="750" horizontal="NO" id="3Iy-fw-R3d">
+                                    <rect key="frame" x="330" y="1" width="16" height="193"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                </scroller>
+                            </scrollView>
+                            <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="CwK-Zb-dbn">
+                                <rect key="frame" x="62" y="54" width="195" height="195"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="195" id="7br-Fr-jeu"/>
+                                    <constraint firstAttribute="width" constant="195" id="LiD-Nr-YeT"/>
+                                </constraints>
+                                <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageAlignment="bottomLeft" imageScaling="proportionallyDown" id="asc-RZ-GMh"/>
+                            </imageView>
+                        </subviews>
+                        <constraints>
+                            <constraint firstItem="ylV-hu-uIh" firstAttribute="top" secondItem="E53-8t-NK9" secondAttribute="top" constant="20" id="8NQ-cc-sRc"/>
+                            <constraint firstAttribute="trailing" secondItem="ylV-hu-uIh" secondAttribute="trailing" constant="20" symbolic="YES" id="MGg-T7-i1S"/>
+                            <constraint firstAttribute="bottom" secondItem="qOU-di-Dg2" secondAttribute="bottom" constant="14" id="Q49-Be-w1G"/>
+                            <constraint firstItem="ylV-hu-uIh" firstAttribute="leading" secondItem="CwK-Zb-dbn" secondAttribute="trailing" constant="58" id="Smm-3s-4b0"/>
+                            <constraint firstItem="CwK-Zb-dbn" firstAttribute="bottom" secondItem="ylV-hu-uIh" secondAttribute="bottom" id="TPt-sM-ro7"/>
+                            <constraint firstItem="CwK-Zb-dbn" firstAttribute="leading" secondItem="E53-8t-NK9" secondAttribute="leading" constant="62" id="kyw-gi-nwF"/>
+                            <constraint firstItem="qOU-di-Dg2" firstAttribute="top" secondItem="CwK-Zb-dbn" secondAttribute="bottom" constant="20" symbolic="YES" id="uJJ-Es-6Sq"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="DetailView" destination="6zr-pS-cxW" id="hH2-OY-bPx"/>
+                        <outlet property="PickPhotoButton" destination="qOU-di-Dg2" id="mWl-Ft-Ifl"/>
+                        <outlet property="ThePhoto" destination="CwK-Zb-dbn" id="u5D-pH-Uqz"/>
+                    </connections>
+                </viewController>
+                <customObject id="2oh-je-t5l" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="790" y="1086.5"/>
         </scene>
     </scenes>
 </document>
