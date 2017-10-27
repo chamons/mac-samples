@@ -8,7 +8,7 @@ This technique could be applied to any other extension scenario where packaging 
 
 This sample should be considered **unofficial and unsupported** (though feel free to ask questions on the forums).
 
-##Quickstart:
+## Quickstart:
 
 - Open managed/QuickLookLibraryTest/QuickLookLibraryTest.csproj and change the Debug signing key to your own 
 - make
