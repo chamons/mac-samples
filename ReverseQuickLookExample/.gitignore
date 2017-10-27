@@ -1,0 +1,9 @@
+.DS_Store
+managed/QuickLookLibraryTest/obj/
+managed/QuickLookLibraryTest/bin/
+managed/QuickLookLibrary/bin/
+managed/QuickLookLibrary/obj/
+managed/QuickLookLibrary.userprefs
+managed/binding/
+native/XamarinQuickLook/build/
+native/XamarinQuickLook/DerivedData/
