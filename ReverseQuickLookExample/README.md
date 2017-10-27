@@ -1,6 +1,6 @@
 # "Reverse" QuickLook Example
 
-Xamarin.Mac does not contain full API coverage, specially when it comes to a number of plugin and extensions surfaces found on macOS. While those "gaps" are valid bugs, and should be reported and added to the backlog, hitting them does not leave and obvious path forward.
+Xamarin.Mac does not contain full API coverage, specially when it comes to a number of plugin and extensions surfaces found on macOS. While those "gaps" are valid bugs, and should be reported and added to the backlog, hitting them does not leave an obvious path forward.
 
 This sample shows the "reverse" technique for handling those situations. We can code a majority of our logic in C#, shared with our application, and write a thin layer in objective-c by using the [Embeddinator-4000](https://mono.github.io/Embeddinator-4000/getting-started-objective-c) to expose it to objective-c.
 
