@@ -2,3 +2,8 @@ TacoFinder.userprefs
 TacoLib/obj/
 TacoLib/bin/
 TacoLib/TacoFinder.Key.cs
+packages/
+TacoFinder.Mac/bin/
+TacoFinder.Mac/obj/
+TacoFinder.iOS/bin/
+TacoFinder.iOS/obj/
