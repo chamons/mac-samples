@@ -85,5 +85,11 @@
   <ItemGroup>
     <InterfaceDefinition Include="Main.storyboard" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\TacoLib\TacoLib.csproj">
+      <Project>{575283D2-93A4-459C-A05F-091E150496E0}</Project>
+      <Name>TacoLib</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Mac\Xamarin.Mac.CSharp.targets" />
 </Project>
