@@ -87,6 +87,14 @@
     <Compile Include="ViewController.designer.cs">
       <DependentUpon>ViewController.cs</DependentUpon>
     </Compile>
+    <Compile Include="TacoDetailedViewController.cs" />
+    <Compile Include="TacoDetailedViewController.designer.cs">
+      <DependentUpon>TacoDetailedViewController.cs</DependentUpon>
+    </Compile>
+    <Compile Include="TacoDetailedView.cs" />
+    <Compile Include="TacoDetailedView.designer.cs">
+      <DependentUpon>TacoDetailedView.cs</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <InterfaceDefinition Include="Main.storyboard" />

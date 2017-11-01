@@ -9,25 +9,25 @@ using System.CodeDom.Compiler;
 
 namespace TacoFinder.Mac
 {
-	[Register ("ViewController")]
-	partial class ViewController
+	[Register ("TacoDetailedViewController")]
+	partial class TacoDetailedViewController
 	{
 		[Outlet]
-		AppKit.NSView DetailedView { get; set; }
+		MapKit.MKMapView MapView { get; set; }
 
 		[Outlet]
-		AppKit.NSOutlineView SourceList { get; set; }
+		AppKit.NSTextField Name { get; set; }
 		
 		void ReleaseDesignerOutlets ()
 		{
-			if (DetailedView != null) {
-				DetailedView.Dispose ();
-				DetailedView = null;
+			if (Name != null) {
+				Name.Dispose ();
+				Name = null;
 			}
 
-			if (SourceList != null) {
-				SourceList.Dispose ();
-				SourceList = null;
+			if (MapView != null) {
+				MapView.Dispose ();
+				MapView = null;
 			}
 		}
 	}

@@ -9,26 +9,12 @@ using System.CodeDom.Compiler;
 
 namespace TacoFinder.Mac
 {
-	[Register ("ViewController")]
-	partial class ViewController
+	[Register ("TacoDetailedView")]
+	partial class TacoDetailedView
 	{
-		[Outlet]
-		AppKit.NSView DetailedView { get; set; }
-
-		[Outlet]
-		AppKit.NSOutlineView SourceList { get; set; }
 		
 		void ReleaseDesignerOutlets ()
 		{
-			if (DetailedView != null) {
-				DetailedView.Dispose ();
-				DetailedView = null;
-			}
-
-			if (SourceList != null) {
-				SourceList.Dispose ();
-				SourceList = null;
-			}
 		}
 	}
 }
