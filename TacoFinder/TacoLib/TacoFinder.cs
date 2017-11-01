@@ -21,7 +21,6 @@ namespace TacoLib
 		}
 	}
 
-
 	public partial class TacoFinder
 	{
 		// Almost any >NET code can be shared between iOS and Mac

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 using AppKit;
 using CoreGraphics;
@@ -94,12 +95,23 @@ namespace TacoFinder.Mac
 		}
 	}
 
+	public class TacoAnnotation : MapKit.MKAnnotation
+	{
+		CLLocationCoordinate2D coordinate;
+
+		public TacoAnnotation (TacoLib.TacoLocation location)
+		{
+			coordinate = new CLLocationCoordinate2D (location.Latitude, location.Longitude);
+		}
+
+		public override CLLocationCoordinate2D Coordinate => coordinate;
+	}
+
 	public partial class ViewController : NSViewController, ICLLocationManagerDelegate
 	{
 		CLLocationManager locationManager;
 		BusySource busySource = new BusySource ();
 		TacoSource source;
-		TacoDetailedViewController detailedController;
 
 		public ViewController (IntPtr handle) : base (handle)
 		{
@@ -108,24 +120,63 @@ namespace TacoFinder.Mac
 		public override void ViewDidLoad ()
 		{
 			base.ViewDidLoad ();
-
-			var mainStoryboard = NSStoryboard.FromName ("Main", null);
-
-			detailedController = (TacoDetailedViewController)mainStoryboard.InstantiateControllerWithIdentifier ("TacoDetailedViewController");
-			DetailedView.AddSubview (detailedController.View);
+			DetailView.WantsLayer = true;
 
 			locationManager = new CLLocationManager ();
 			locationManager.Delegate = this;
 			locationManager.DesiredAccuracy = CLLocation.AccuracyBest;
-
 			locationManager.StartUpdatingLocation ();
 			SetBusy ();
 		}
 
 		void SetBusy ()
-		{			
+		{
 			SourceList.Delegate = busySource;
-			SourceList.DataSource = busySource;			
+			SourceList.DataSource = busySource;
+		}
+
+		NSStackView stack;
+		NSTextView label;
+		MapKit.MKMapView map;
+		const int Padding = 10;
+		void SetDetailView (TacoLib.TacoLocation location)
+		{
+			if (stack == null) {
+				map = new MapKit.MKMapView () {
+				};
+
+				label = new NSTextView () {
+					DrawsBackground = false,
+					Editable = false,
+					Selectable = false,
+					Alignment = NSTextAlignment.Center,
+					Value = "Location",
+				};
+
+				stack = new NSStackView () {
+					Orientation = NSUserInterfaceLayoutOrientation.Vertical,
+					TranslatesAutoresizingMaskIntoConstraints = false
+				};
+
+				label.HeightAnchor.ConstraintEqualToConstant (20).Active = true;
+
+				DetailView.AddSubview (stack);
+
+				stack.LeadingAnchor.ConstraintEqualToAnchor (DetailView.LeadingAnchor, Padding).Active = true;
+				stack.TrailingAnchor.ConstraintEqualToAnchor (DetailView.TrailingAnchor, -Padding).Active = true;
+				stack.TopAnchor.ConstraintEqualToAnchor (DetailView.TopAnchor, Padding).Active = true;
+				stack.BottomAnchor.ConstraintEqualToAnchor (DetailView.BottomAnchor, -Padding).Active = true;
+
+				stack.AddView (label, NSStackViewGravity.Center);
+				stack.AddView (map, NSStackViewGravity.Center);
+			}
+
+			label.Value = location.Name;
+			var mapLocation = new CLLocation (location.Latitude, location.Longitude);
+			var region = MapKit.MKCoordinateRegion.FromDistance (mapLocation.Coordinate, 1000, 1000);
+			map.SetRegion (region, true);
+			map.RemoveAnnotations (map.Annotations);
+			map.AddAnnotation (new TacoAnnotation (location));
 		}
 
 		[Export ("locationManager:didUpdateLocations:")]
@@ -145,9 +196,7 @@ namespace TacoFinder.Mac
 			source = new TacoSource (list);
 			SourceList.Delegate = source;
 			SourceList.DataSource = source;
-			source.SelectionChanged += (sender, location) => {
-				detailedController.SetSelection (location);
-			};
+			source.SelectionChanged += (sender, location) => SetDetailView (location);
 
 			SourceList.SelectRow (0, false);
 		}

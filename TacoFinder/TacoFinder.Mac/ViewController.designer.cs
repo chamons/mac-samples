@@ -13,16 +13,16 @@ namespace TacoFinder.Mac
 	partial class ViewController
 	{
 		[Outlet]
-		AppKit.NSView DetailedView { get; set; }
+		AppKit.NSView DetailView { get; set; }
 
 		[Outlet]
 		AppKit.NSOutlineView SourceList { get; set; }
 		
 		void ReleaseDesignerOutlets ()
 		{
-			if (DetailedView != null) {
-				DetailedView.Dispose ();
-				DetailedView = null;
+			if (DetailView != null) {
+				DetailView.Dispose ();
+				DetailView = null;
 			}
 
 			if (SourceList != null) {
