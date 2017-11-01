@@ -1,11 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Runtime.InteropServices;
+using System.Linq;
 using System.Threading.Tasks;
 using AppKit;
-using CoreGraphics;
 using CoreLocation;
 using Foundation;
+using TacoLib;
 
 namespace TacoFinder.Mac
 {
@@ -44,45 +43,71 @@ namespace TacoFinder.Mac
 
 	class TacoSource : NSObject, INSOutlineViewDelegate, INSOutlineViewDataSource
 	{
-		List<TacoLib.TacoLocation> Locations;
-		public TacoSource (List<TacoLib.TacoLocation> locations)
+		TacoOptions Options;
+
+		public TacoSource (TacoOptions options)
 		{
-			Locations = locations;
+			Options = options;
 		}
 
-		static TacoLib.TacoLocation UnwrapLocation (NSObject item)
+		static TacoLocation UnwrapLocation (NSObject item)
 		{
-			return ((NSObjectWrapper<TacoLib.TacoLocation>)item).Value;
+			return ((NSObjectWrapper<TacoLocation>)item).Value;
 		}
 
-		public event EventHandler<TacoLib.TacoLocation> SelectionChanged;
-		void OnChanged (TacoLib.TacoLocation location) => SelectionChanged?.Invoke (this, location);
-		
+		public event EventHandler<TacoLocation> SelectionChanged;
+		void OnChanged (TacoLocation location) => SelectionChanged?.Invoke (this, location);
+
 		[Export ("outlineView:numberOfChildrenOfItem:")]
-		public nint GetChildrenCount (NSOutlineView outlineView, NSObject item) => Locations.Count;
+		public nint GetChildrenCount (NSOutlineView outlineView, NSObject item)
+		{
+			if (item == null)
+				return Options.Brands.Count ();
+			else
+				return Options.GetLocations ((NSString)item).Count ();
+		}
 
 		[Export ("outlineView:child:ofItem:")]
 		public NSObject GetChild (NSOutlineView outlineView, nint childIndex, NSObject item)
 		{
-			return new NSObjectWrapper<TacoLib.TacoLocation> (Locations [(int)childIndex]);
+			// Root Element
+			if (item == null) 
+			{
+				return (NSString)Options.Brands.ElementAt ((int)childIndex);
+			}
+			else
+			{
+				string brand = (NSString)item;
+				return new NSObjectWrapper<TacoLocation> (Options.GetLocations (brand).ElementAt ((int)childIndex));
+			}
 		}
 
 		[Export ("outlineView:isItemExpandable:")]
-		public bool ItemExpandable (NSOutlineView outlineView, NSObject item) => false;
+		public bool ItemExpandable (NSOutlineView outlineView, NSObject item)
+		{
+			return item is NSString;
+		}
+
+		string GetName (NSObject item)
+		{
+			if (item is NSString)
+				return (string)(NSString)item;
+			else
+				return UnwrapLocation (item).Name;
+		}
 
 		[Export ("outlineView:objectValueForTableColumn:byItem:")]
 		public NSObject GetObjectValue (NSOutlineView outlineView, NSTableColumn tableColumn, NSObject item)
 		{
-			var location = UnwrapLocation (item);
-			return (NSString)location.Name;
+			return item; 
 		}
 
 		[Export ("outlineView:viewForTableColumn:item:")]
 		public NSView GetView (NSOutlineView outlineView, NSTableColumn tableColumn, NSObject item)
 		{
-			var location = UnwrapLocation (item);
 			var view = (NSTableCellView)outlineView.MakeView ("HeaderCell", this);
-			view.TextField.StringValue = location.Name;
+			view.TextField.StringValue = GetName (item);
+			view.TextField.TextColor = NSColor.Black;
 			return view;
 		}
 
@@ -90,8 +115,12 @@ namespace TacoFinder.Mac
 		public void SelectionDidChange (NSNotification notification)
 		{
 			NSOutlineView view = (NSOutlineView)notification.Object;
-			int index = (int)view.SelectedRow;
-			OnChanged (Locations[index]);
+			var selectedItem = view.ItemAtRow (view.SelectedRow);
+			if (!(selectedItem is NSString))
+			{
+				var location = UnwrapLocation (selectedItem);
+				OnChanged (location);
+			}
 		}
 	}
 
@@ -139,7 +168,7 @@ namespace TacoFinder.Mac
 		NSTextView label;
 		MapKit.MKMapView map;
 		const int Padding = 10;
-		void SetDetailView (TacoLib.TacoLocation location)
+		void SetDetailView (TacoLocation location)
 		{
 			if (stack == null) {
 				map = new MapKit.MKMapView () {

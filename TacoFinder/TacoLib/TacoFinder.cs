@@ -21,6 +21,34 @@ namespace TacoLib
 		}
 	}
 
+	// The set of all taco options nearby
+	// Multiple locations with the same name are collected into a "Brand"
+	public class TacoOptions
+	{
+		Dictionary<string, List<TacoLocation>> AllLocations = new Dictionary<string, List<TacoLocation>> ();
+
+		public void Add (TacoLocation location)
+		{
+			if (!AllLocations.ContainsKey (location.Name))
+				AllLocations.Add (location.Name, new List<TacoLocation> ());
+
+			AllLocations [location.Name].Add (location);
+		}
+
+		public IEnumerable<string> Brands
+		{
+			get
+			{
+				return AllLocations.Keys;
+			}
+		}
+
+		public IEnumerable<TacoLocation> GetLocations (string brand)
+		{
+			return AllLocations [brand];
+		}
+ 	}
+
 	public partial class TacoFinder
 	{
 		// Almost any >NET code can be shared between iOS and Mac
@@ -48,7 +76,7 @@ namespace TacoLib
 			return false;
 		}
 
-		public async Task<List<TacoLocation>> Find (double latitude, double longitude)
+		public async Task<TacoOptions> Find (double latitude, double longitude)
 		{
 			var request = new FindNearByRequest (DataSource)
 			{
@@ -65,14 +93,14 @@ namespace TacoLib
 
 			var response = await QueryManager.ProcessQuery (request);
 
-			List<TacoLocation> locations = new List<TacoLocation> (response.Results.Count);
+			TacoOptions options = new TacoOptions ();
 			foreach (var result in response.Results.Where (x => x.Properties.ContainsKey ("Name")))
 			{
 				string name = (string)result.Properties ["Name"];
 				if (LikelyHashTaco (name))
-					locations.Add (new TacoLocation (result.Location.Latitude, result.Location.Longitude, name));
+					options.Add (new TacoLocation (result.Location.Latitude, result.Location.Longitude, name));
 			}
-			return locations;
+			return options;
 		}
 	}
 }
