@@ -51,7 +51,7 @@ namespace TacoLib
 
 	public partial class TacoFinder
 	{
-		// Almost any >NET code can be shared between iOS and Mac
+		// Almost any .NET code can be shared between iOS and Mac
 		// This example uses https://github.com/Microsoft/BingMapsSDSToolkit
 		// to find locations that may serve taco's within 50 miles of your
 		// current location, but this could be any business-specific logic
@@ -67,12 +67,21 @@ namespace TacoLib
 		}
 
 		static readonly string [] TacoWordList = { "taco", "mex", "cactus", "ranch", "spanish", "chili", "chile"};
+		static readonly string [] TacoExcludeWordList = { "cream" };
+
 		bool LikelyHashTaco (string name)
 		{
+			name = name.ToLower ();
+
 			// This is obviously insufficient for more than a simple sample
+			foreach (var word in TacoExcludeWordList)
+				if (name.Contains (word))
+					return false;
+
 			foreach (var word in TacoWordList)
-				if (name.ToLower().Contains (word))
+				if (name.Contains (word))
 					return true;
+
 			return false;
 		}
 
