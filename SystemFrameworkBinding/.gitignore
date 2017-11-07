@@ -1,0 +1,5 @@
+*.userprefs
+bin
+obj
+TestBindingProject/bin/
+TestBindingProject/obj/
