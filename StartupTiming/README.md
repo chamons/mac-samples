@@ -8,6 +8,8 @@ We can then compare that to a call to `DateTimeOffset.Now.ToUnixTimeMilliseconds
 
 There will be a portion not measured here, as the creation of a process through the custom initialization method is not measure, but for a vast majority of application this is neglectable.
 
+The application can be launched from the command line via `bin/Debug/StartupTiming.app/Contents/MacOS/StartupTiming` to easily test timing repeatedly. 
+
 ## Technical Notes
 
 - This application linked to the static library `native/time.a` which is native/time.c compiled via `clang -c time.c -o time.o && libtool -static time.o -o time.a`.
