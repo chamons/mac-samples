@@ -3,6 +3,8 @@ using System.Collections.Generic;
 
 using UIKit;
 using Foundation;
+using System.Threading.Tasks;
+using TacoLib;
 
 namespace TacoFinder.iOS
 {
@@ -10,7 +12,8 @@ namespace TacoFinder.iOS
 	{
 		public DetailViewController DetailViewController { get; set; }
 
-		DataSource dataSource;
+		TacoDataSource dataSource;
+		OneShotLocation locationFinder = new OneShotLocation ();
 
 		protected MasterViewController (IntPtr handle) : base (handle)
 		{
@@ -22,37 +25,25 @@ namespace TacoFinder.iOS
 			base.ViewDidLoad ();
 
 			Title = NSBundle.MainBundle.LocalizedString ("Master", "Master");
-
-			// Perform any additional setup after loading the view, typically from a nib.
-			NavigationItem.LeftBarButtonItem = EditButtonItem;
-
-			var addButton = new UIBarButtonItem (UIBarButtonSystemItem.Add, AddNewItem);
-			addButton.AccessibilityLabel = "addButton";
-			NavigationItem.RightBarButtonItem = addButton;
-
 			DetailViewController = (DetailViewController)((UINavigationController)SplitViewController.ViewControllers[1]).TopViewController;
 
-			TableView.Source = dataSource = new DataSource (this);
+			locationFinder.Start (async locations => {
+				if (locations.Length > 0)
+					await Find (locations [0].Coordinate.Latitude, locations [0].Coordinate.Longitude);
+			});
+		}
+
+		public async Task Find (double latitude, double longitude)
+		{
+			var finder = new TacoLib.TacoFinder ();
+			var options = await finder.Find (latitude, longitude);
+			TableView.Source = dataSource = new TacoDataSource (this, options);
 		}
 
 		public override void ViewWillAppear (bool animated)
 		{
 			ClearsSelectionOnViewWillAppear = SplitViewController.Collapsed;
 			base.ViewWillAppear (animated);
-		}
-
-		public override void DidReceiveMemoryWarning ()
-		{
-			base.DidReceiveMemoryWarning ();
-			// Release any cached data, images, etc that aren't in use.
-		}
-
-		void AddNewItem (object sender, EventArgs args)
-		{
-			dataSource.Objects.Insert (0, DateTime.Now);
-
-			using (var indexPath = NSIndexPath.FromRowSection (0, 0))
-				TableView.InsertRows (new[] { indexPath }, UITableViewRowAnimation.Automatic);
 		}
 
 		public override void PrepareForSegue (UIStoryboardSegue segue, NSObject sender)
@@ -69,15 +60,18 @@ namespace TacoFinder.iOS
 			}
 		}
 
-		class DataSource : UITableViewSource
+		class TacoDataSource : UITableViewSource
 		{
 			static readonly NSString CellIdentifier = new NSString ("Cell");
-			readonly List<object> objects = new List<object> ();
-			readonly MasterViewController controller;
 
-			public DataSource (MasterViewController controller)
+			readonly MasterViewController Controller;
+			TacoOptions Options;
+
+			public TacoDataSource (MasterViewController controller, TacoOptions options)
 			{
-				this.controller = controller;
+				controller = controller;
+				Options = options;
+
 			}
 
 			public IList<object> Objects
@@ -106,30 +100,13 @@ namespace TacoFinder.iOS
 				return cell;
 			}
 
-			public override bool CanEditRow (UITableView tableView, NSIndexPath indexPath)
-			{
-				// Return false if you do not want the specified item to be editable.
-				return true;
-			}
+			public override bool CanEditRow (UITableView tableView, NSIndexPath indexPath) => false;
 
-			public override void CommitEditingStyle (UITableView tableView, UITableViewCellEditingStyle editingStyle, NSIndexPath indexPath)
-			{
-				if (editingStyle == UITableViewCellEditingStyle.Delete)
-				{
-					// Delete the row from the data source.
-					objects.RemoveAt (indexPath.Row);
-					controller.TableView.DeleteRows (new[] { indexPath }, UITableViewRowAnimation.Fade);
-				}
-				else if (editingStyle == UITableViewCellEditingStyle.Insert)
-				{
-					// Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view.
-				}
-			}
 
 			public override void RowSelected (UITableView tableView, NSIndexPath indexPath)
 			{
 				if (UIDevice.CurrentDevice.UserInterfaceIdiom == UIUserInterfaceIdiom.Pad)
-					controller.DetailViewController.SetDetailItem (objects[indexPath.Row]);
+					Controller.DetailViewController.SetDetailItem (objects[indexPath.Row]);
 			}
 		}
 	}

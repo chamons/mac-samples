@@ -40,9 +40,9 @@ namespace TacoFinder.Mac
 		public async Task Find (double latitude, double longitude)
 		{
 			var finder = new TacoLib.TacoFinder ();
-			var list = await finder.Find (latitude, longitude);
+			var options = await finder.Find (latitude, longitude);
 
-			source = new TacoSource (list);
+			source = new TacoSource (options);
 			SourceList.Delegate = source;
 			SourceList.DataSource = source;
 			source.SelectionChanged += (sender, location) => SetDetailView (location);

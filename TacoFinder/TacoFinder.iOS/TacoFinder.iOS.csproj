@@ -107,6 +107,9 @@
     <Compile Include="DetailViewController.designer.cs">
       <DependentUpon>DetailViewController.cs</DependentUpon>
     </Compile>
+    <Compile Include="..\TacoFinder.Mac\Utilities\OneShotLocation.cs">
+      <Link>OneShotLocation.cs</Link>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\TacoLib\TacoLib.csproj">

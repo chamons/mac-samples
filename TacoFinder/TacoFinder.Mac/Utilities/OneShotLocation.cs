@@ -1,13 +1,9 @@
 ﻿using System;
-using System.Linq;
 using System.Threading.Tasks;
-using AppKit;
 using CoreLocation;
 using Foundation;
-using TacoFinder.Mac.Outline;
-using TacoLib;
 
-namespace TacoFinder.Mac
+namespace TacoFinder
 {
 	class OneShotLocation : NSObject, ICLLocationManagerDelegate
 	{
