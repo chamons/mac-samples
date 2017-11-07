@@ -1,6 +1,6 @@
 ## Startup Timing
 
-One important metric of application performance is the time it takes to start up. Measuring that accurately can be a challenge, specially in the world of managed code, where a significant amount of work is done before your managed entry point is invoked.
+One important metric of application performance is the time it takes to start up. Measuring that accurately can be a challenge, especially in the world of managed code, where a significant amount of work is done before your managed entry point is invoked.
 
 This sample uses the custom initialization feature in Xamarin.Mac to have a C function invoked very early in the startup process. That function in our case just prints the current number of milliseconds via `gettimeofday`.
 
