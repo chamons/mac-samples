@@ -6,7 +6,7 @@ This sample uses the custom initialization feature in Xamarin.Mac to have a C fu
 
 We can then compare that to a call to `DateTimeOffset.Now.ToUnixTimeMilliseconds` inside `AppDelegate.DidFinishLaunching` and have a very reasonable idea how long our startup took.
 
-There will be a portion not measured here, as the creation of a process through the custom initialization method is not measure, but for a vast majority of application this is neglectable.
+There will be a portion not measured here, as the creation of a process through the custom initialization method is not measure, but for a vast majority of applications this is neglectable.
 
 The application can be launched from the command line via `bin/Debug/StartupTiming.app/Contents/MacOS/StartupTiming` to easily test timing repeatedly. 
 
