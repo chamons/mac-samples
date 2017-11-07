@@ -17,7 +17,7 @@ I was able to replace the nint's with long
 
 - Replace SecCertificateRef* and SecKeyAlgorithm* with IntPtr
 - Comment out `InSessionWithError` for now since it contains a block, which are tricky to get right.
-- Fix TKTokenSessionDelegate to have less terrible name
+- Fix TKTokenSessionDelegate methods to have less terrible name
 - Comment out TKSmartCardTokenDriverDelegate for now
 - Fix TKSmartCardUserInteraction.Cancel to be a method not a property
 - Fix TKSmartCardSlot.MakeSmartCard to be a method and not a property
@@ -38,7 +38,7 @@ I was able to replace the nint's with long
 ```
 			
 - Run. Get a null.
-- Open Console. See "ctk: connecting to slot registration server failed"
+- Open Console (System Log). See "ctk: connecting to slot registration server failed"
 - Read documentation. See [note](https://developer.apple.com/documentation/cryptotokenkit/tksmartcardslotmanager?language=objc) 
 - Add com.apple.security.smartcard entitlement to Entitlements.plist and enable code signing / entitlements
 - We get a valid manager! I don't have smartcard hardware, so I can't test more than that.
