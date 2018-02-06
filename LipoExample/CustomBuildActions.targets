@@ -1,0 +1,12 @@
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+
+	<PropertyGroup>
+	    <CreateAppBundleDependsOn>$(CreateAppBundleDependsOn);FixMonoPosix</CreateAppBundleDependsOn>
+	</PropertyGroup>
+
+	<!-- Idealy this would use Inputs / Outputs but since libMonoPosixHelper.dylib does not change we'd always skip. -->
+	<!-- We could create a "two-step" process where we copy libMonoPosixHelper.dylib and then process that into the bundle. -->
+	<Target Name="FixMonoPosix" Condition="'$(Configuration)' == 'Release' ">
+	        <Exec Command="lipo $(AppBundleDir)/Contents/MonoBundle/libMonoPosixHelper.dylib -extract x86_64 -output $(AppBundleDir)/Contents/MonoBundle/libMonoPosixHelper.dylib"/>  
+	</Target>
+</Project>
