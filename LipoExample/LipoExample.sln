@@ -1,0 +1,17 @@
+
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2012
+Project("{9344BDBB-3E7F-41FC-A0DD-8665D75EE146}") = "LipoExample", "LipoExample.csproj", "{E6F43382-88F5-4CC9-82A7-5329973BCE15}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|x86 = Debug|x86
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{E6F43382-88F5-4CC9-82A7-5329973BCE15}.Debug|x86.ActiveCfg = Debug|x86
+		{E6F43382-88F5-4CC9-82A7-5329973BCE15}.Debug|x86.Build.0 = Debug|x86
+		{E6F43382-88F5-4CC9-82A7-5329973BCE15}.Release|x86.ActiveCfg = Release|x86
+		{E6F43382-88F5-4CC9-82A7-5329973BCE15}.Release|x86.Build.0 = Release|x86
+	EndGlobalSection
+EndGlobal
